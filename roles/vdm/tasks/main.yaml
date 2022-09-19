@@ -56,6 +56,20 @@
     - uninstall
     - update
 
+- name: Startup Sequencer
+  overlay_facts:
+    cadence_name: "{{ V4_CFG_CADENCE_NAME }}"
+    cadence_number: "{{ V4_CFG_CADENCE_VERSION }}"
+    existing: "{{ vdm_overlays }}"
+    add:
+      - { transformers: "overlays/startup/ordered-startup-transformer.yaml",  min: "2022.1.1", priority: 59 }
+  when: 
+    - V4_STARTUP_SEQUENCER_ENABLED
+  tags:
+    - install
+    - uninstall
+    - update
+
 - name: CR access
   block:
     - template:
